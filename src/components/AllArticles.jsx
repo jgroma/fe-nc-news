@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getArticles } from "../api";
 import ArticleCard from "./ArticleCard";
 
-export default function AllArticles() {
+export default function AllArticles({ setArticleToRead }) {
   const [articlesList, setArticlesList] = useState([]);
   const [totalCount, setTotalCount] = useState();
   const [currentPage, setCurrentPage] = useState(1);
@@ -50,6 +50,7 @@ export default function AllArticles() {
               created_at={article.created_at}
               votes={article.votes}
               comment_count={article.comment_count}
+              setArticleToRead={setArticleToRead}
             />
           );
         })}
