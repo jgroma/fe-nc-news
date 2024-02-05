@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function ArticleCard({
   article_id,
   title,
@@ -7,9 +9,15 @@ export default function ArticleCard({
   created_at,
   votes,
   comment_count,
+  setArticleToRead,
+  body,
 }) {
   function formatDate(date) {
     return new Date(date).toDateString();
+  }
+
+  function readArticle() {
+    setArticleToRead(article_id);
   }
 
   return (
@@ -22,6 +30,12 @@ export default function ArticleCard({
       <p>Date posted: {formatDate(created_at)}</p>
       <p>Votes: {votes}</p>
       <p>Comments: {comment_count}</p>
+      {setArticleToRead !== undefined ? (
+        <Link to={`/article/${article_id}`} onClick={readArticle}>
+          Read
+        </Link>
+      ) : null}
+      {body !== undefined ? <p>{body}</p> : null}
     </li>
   );
 }

@@ -8,3 +8,12 @@ export function getArticles(p) {
       return response.data;
     });
 }
+
+export function getArticleById(article_id) {
+  return axios
+    .get(`https://nc-news-z5u7.onrender.com/api/articles/${article_id}`)
+    .then((response) => {
+      //console.log(response, "article by id");
+      return response.data;
+    });
+}
