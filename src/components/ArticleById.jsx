@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 import { getArticleById } from "../api";
 import ArticleCard from "./ArticleCard";
+import { useParams } from "react-router-dom";
 
-export default function ArticleById({ article_id }) {
+// export default function ArticleById({ article_id }) {
+export default function ArticleById() {
   const [article, setArticle] = useState({});
+  const { article_id } = useParams();
 
   useEffect(() => {
+    console.log(article_id, "article_id");
     getArticleById(article_id).then((data) => {
       //console.log(data, "art in comp");
       setArticle(data.article);
