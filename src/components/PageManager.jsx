@@ -11,10 +11,11 @@ export default function PageManager() {
         path="/"
         element={<AllArticles setArticleToRead={setArticleToRead} />}
       />
-      <Route
+      <Route path="/article/:article_id" element={<ArticleById />} />
+      {/* <Route
         path="/article/:article_id"
         element={<ArticleById article_id={articleToRead} />}
-      />
+      /> */}
     </Routes>
   );
 }
