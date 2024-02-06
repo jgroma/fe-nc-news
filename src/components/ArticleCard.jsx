@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import formatDate from "../utils";
 
 export default function ArticleCard({
   article_id,
@@ -12,9 +13,9 @@ export default function ArticleCard({
   setArticleToRead,
   body,
 }) {
-  function formatDate(date) {
-    return new Date(date).toDateString();
-  }
+  // function formatDate(date) {
+  //   return new Date(date).toDateString();
+  // }
 
   function readArticle() {
     setArticleToRead(article_id);

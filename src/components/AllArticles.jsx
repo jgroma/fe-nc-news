@@ -6,14 +6,17 @@ export default function AllArticles({ setArticleToRead }) {
   const [articlesList, setArticlesList] = useState([]);
   const [totalCount, setTotalCount] = useState();
   const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     getArticles(currentPage).then((data) => {
-      console.log(data, "<arr data");
       setArticlesList(data.articles);
       setTotalCount(data.total_count);
+      setIsLoading(false);
     });
   }, [currentPage]);
+
+  if (isLoading) return <p>Loading data...</p>;
 
   return (
     <main className="AllArticles">
