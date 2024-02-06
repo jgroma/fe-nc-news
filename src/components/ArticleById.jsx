@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getArticleById, getComments, patchArticleVote } from "../api";
 import ArticleCard from "./ArticleCard";
 import { useParams } from "react-router-dom";
 import CommentCard from "./CommentCard";
+import UserContext from "../contexts/UserContext";
+import CommentAdder from "./CommentAdder";
 
 export default function ArticleById() {
   const [isArticleLoading, setIsArticleLoading] = useState(true);
@@ -17,6 +19,9 @@ export default function ArticleById() {
 
   const { article_id } = useParams();
 
+  const { signedInUser } = useContext(UserContext);
+  //const [isNewComment, setIsNewComment] = useState(false);
+
   useEffect(() => {
     getArticleById(article_id).then((data) => {
       setArticle(data.article);
@@ -28,6 +33,7 @@ export default function ArticleById() {
 
   useEffect(() => {
     getComments(article_id, currentPage).then((data) => {
+      console.log("hi");
       setCommentList(data.comments);
       setIsCommentListLoading(false);
     });
@@ -72,6 +78,11 @@ export default function ArticleById() {
         votingError={votingError}
       />
       <h2>Comments</h2>
+      <CommentAdder
+        article_id={article_id}
+        setCommentList={setCommentList}
+        commentList={commentList}
+      />
       {totalCount > 10 ? (
         <div className="AllArticles__btn-container">
           <button

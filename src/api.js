@@ -31,3 +31,11 @@ export function patchArticleVote(article_id, vote) {
       return response.data;
     });
 }
+
+export function postComment(article_id, username, body) {
+  return ncNewsApi
+    .post(`/articles/${article_id}/comments`, { username, body })
+    .then((response) => {
+      return response.data;
+    });
+}
