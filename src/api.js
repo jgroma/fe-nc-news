@@ -23,3 +23,11 @@ export function getComments(article_id, p) {
       return response.data;
     });
 }
+
+export function patchArticleVote(article_id, vote) {
+  return ncNewsApi
+    .patch(`/articles/${article_id}`, { inc_votes: vote })
+    .then((response) => {
+      return response.data;
+    });
+}

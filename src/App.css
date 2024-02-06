@@ -69,3 +69,22 @@ img {
   /* background-color: rgb(185, 123, 83); */
   color: black;
 }
+
+@media (max-width: 768px) {
+  .CommentList {
+    display: grid;
+    grid-template-columns: 1fr;
+    padding: 2em;
+    grid-gap: 2em;
+  }
+}
+
+.ArticleCard__btn-container {
+  display: flex;
+  justify-content: center;
+  gap: 1em;
+}
+
+.ArticleCard__btn-container > button {
+  border: 1px solid black;
+}

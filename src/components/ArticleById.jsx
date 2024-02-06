@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getArticleById, getComments } from "../api";
+import { getArticleById, getComments, patchArticleVote } from "../api";
 import ArticleCard from "./ArticleCard";
 import { useParams } from "react-router-dom";
 import CommentCard from "./CommentCard";
@@ -11,6 +11,9 @@ export default function ArticleById() {
   const [commentList, setCommentList] = useState([]);
   const [totalCount, setTotalCount] = useState();
   const [currentPage, setCurrentPage] = useState(1);
+  const [updatedVote, setUpdatedVote] = useState();
+  const [userVote, setUserVote] = useState(null);
+  const [votingError, setVotingError] = useState(null);
 
   const { article_id } = useParams();
 
@@ -19,6 +22,7 @@ export default function ArticleById() {
       setArticle(data.article);
       setIsArticleLoading(false);
       setTotalCount(data.article.comment_count);
+      setUpdatedVote(data.article.votes);
     });
   }, []);
 
@@ -28,6 +32,27 @@ export default function ArticleById() {
       setIsCommentListLoading(false);
     });
   }, [currentPage]);
+
+  useEffect(() => {
+    if (userVote !== null) {
+      console.log(userVote, "userVote in UseEffect");
+      setVotingError(null);
+      patchArticleVote(article_id, userVote)
+        .then((response) => {
+          //console.log(updatedVote, "updatedVote");
+          //console.log(response.article.votes, "patch article votes");
+        })
+        .catch((err) => {
+          setVotingError("Something went wrong, please try again.");
+          if (userVote === 1) {
+            setUpdatedVote((prevVote) => prevVote - 1);
+          } else if (userVote === -1) {
+            setUpdatedVote((prevVote) => prevVote + 1);
+          }
+        });
+    }
+    //}, [userVote]);
+  }, [updatedVote]);
 
   if (isArticleLoading) return <p>Loading article...</p>;
   return (
@@ -39,9 +64,12 @@ export default function ArticleById() {
         topic={article.topic}
         author={article.author}
         created_at={article.created_at}
-        votes={article.votes}
+        votes={updatedVote}
         comment_count={article.comment_count}
         body={article.body}
+        setUpdatedVote={setUpdatedVote}
+        setUserVote={setUserVote}
+        votingError={votingError}
       />
       <h2>Comments</h2>
       {totalCount > 10 ? (
