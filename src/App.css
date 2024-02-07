@@ -97,3 +97,7 @@ img {
   gap: 1em;
   margin-bottom: 1em;
 }
+
+.CommentCard__delete-btn {
+  border: 1px solid red;
+}

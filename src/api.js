@@ -39,3 +39,9 @@ export function postComment(article_id, username, body) {
       return response.data;
     });
 }
+
+export function deleteComment(comment_id) {
+  return ncNewsApi.delete(`/comments/${comment_id}`).then((response) => {
+    return response.data;
+  });
+}

@@ -39,7 +39,7 @@ export default function ArticleById() {
 
   useEffect(() => {
     if (userVote !== null) {
-      console.log(userVote, "userVote in UseEffect");
+      //console.log(userVote, "userVote in UseEffect");
       setVotingError(null);
       patchArticleVote(article_id, userVote)
         .then((response) => {
@@ -113,6 +113,9 @@ export default function ArticleById() {
                 author={comment.author}
                 votes={comment.votes}
                 created_at={comment.created_at}
+                setTotalCount={setTotalCount}
+                setCommentList={setCommentList}
+                commentList={commentList}
               />
             );
           })}

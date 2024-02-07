@@ -21,9 +21,6 @@ export default function CommentAdder({
       .then((response) => {
         setIsLoading(false);
         setPostingError(null);
-        console.log(
-          `Comment posted by ${signedInUser}. Body - ${commentInput}`
-        );
         setCommentList([response.comment, ...commentList]);
         setTotalCount((prevCount) => prevCount + 1);
       })
@@ -33,13 +30,12 @@ export default function CommentAdder({
   }
   function handleCommentInput(event) {
     setCommentInput(event.target.value);
-    console.log(event);
   }
 
   if (isLoading) return <p>Comment is being created</p>;
   return (
     <>
-      {postingError ? <p>{postingError}</p> : null}
+      {postingError !== null ? <p>{postingError}</p> : null}
       <form onSubmit={handleSubmit}>
         <div className="CommentAdder__form-container">
           <label htmlFor="comment_body">Add comment</label>
