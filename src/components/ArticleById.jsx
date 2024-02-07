@@ -20,7 +20,6 @@ export default function ArticleById() {
   const { article_id } = useParams();
 
   const { signedInUser } = useContext(UserContext);
-  //const [isNewComment, setIsNewComment] = useState(false);
 
   useEffect(() => {
     getArticleById(article_id).then((data) => {
@@ -33,7 +32,6 @@ export default function ArticleById() {
 
   useEffect(() => {
     getComments(article_id, currentPage).then((data) => {
-      console.log("hi");
       setCommentList(data.comments);
       setIsCommentListLoading(false);
     });
@@ -71,7 +69,7 @@ export default function ArticleById() {
         author={article.author}
         created_at={article.created_at}
         votes={updatedVote}
-        comment_count={article.comment_count}
+        comment_count={totalCount}
         body={article.body}
         setUpdatedVote={setUpdatedVote}
         setUserVote={setUserVote}
@@ -82,6 +80,7 @@ export default function ArticleById() {
         article_id={article_id}
         setCommentList={setCommentList}
         commentList={commentList}
+        setTotalCount={setTotalCount}
       />
       {totalCount > 10 ? (
         <div className="AllArticles__btn-container">
