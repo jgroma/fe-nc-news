@@ -88,3 +88,12 @@ img {
 .ArticleCard__btn-container > button {
   border: 1px solid black;
 }
+
+.CommentAdder__form-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1em;
+  margin-bottom: 1em;
+}
