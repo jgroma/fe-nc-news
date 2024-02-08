@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import SearchByTopic from "./SearchByTopic";
 import { getArticles } from "../api";
 import ArticleCard from "./ArticleCard";
+import ArticleSorter from "./ArticleSorter";
 
 export default function ArticlesByTopic({ setArticleToRead }) {
   const [articlesList, setArticlesList] = useState([]);
@@ -10,11 +11,15 @@ export default function ArticlesByTopic({ setArticleToRead }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
+  const [sortingParams, setSortingParams] = useState({
+    sort_by: "created_at",
+    order: "desc",
+  });
 
   const { topic } = useParams();
 
   useEffect(() => {
-    getArticles(currentPage, topic)
+    getArticles(currentPage, sortingParams, topic)
       .then((data) => {
         setArticlesList(data.articles);
         setTotalCount(data.total_count);
@@ -24,7 +29,7 @@ export default function ArticlesByTopic({ setArticleToRead }) {
       .catch((error) => {
         setIsError(true);
       });
-  }, [currentPage, topic]);
+  }, [currentPage, topic, sortingParams]);
 
   if (isLoading) return <p>Loading data...</p>;
 
@@ -32,7 +37,11 @@ export default function ArticlesByTopic({ setArticleToRead }) {
 
   return (
     <main className="AllArticles">
-      <SearchByTopic></SearchByTopic>
+      <SearchByTopic />
+      <ArticleSorter
+        sortingParams={sortingParams}
+        setSortingParams={setSortingParams}
+      />
       <h2>List of all {topic} articles</h2>
       <p>Total count: {totalCount}</p>
       <div className="AllArticles__btn-container">

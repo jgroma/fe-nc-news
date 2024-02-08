@@ -1,26 +1,36 @@
 import { useEffect, useState } from "react";
 import { getArticles } from "../api";
 import ArticleCard from "./ArticleCard";
+import ArticleSorter from "./ArticleSorter";
 
 export default function AllArticles({ setArticleToRead }) {
   const [articlesList, setArticlesList] = useState([]);
   const [totalCount, setTotalCount] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
+  const [sortingParams, setSortingParams] = useState({
+    sort_by: "created_at",
+    order: "desc",
+  });
 
   useEffect(() => {
-    getArticles(currentPage).then((data) => {
+    getArticles(currentPage, sortingParams).then((data) => {
       setArticlesList(data.articles);
       setTotalCount(data.total_count);
       setIsLoading(false);
+      //console.log(data.articles);
     });
-  }, [currentPage]);
+  }, [currentPage, sortingParams]);
 
   if (isLoading) return <p>Loading data...</p>;
 
   return (
     <main className="AllArticles">
       <h2>List of all articles</h2>
+      <ArticleSorter
+        setSortingParams={setSortingParams}
+        sortingParams={sortingParams}
+      />
       <p>Total count: {totalCount}</p>
       <div className="AllArticles__btn-container">
         <button
