@@ -2,23 +2,21 @@ import { useEffect, useState } from "react";
 import { getArticles } from "../api";
 import ArticleCard from "./ArticleCard";
 import ArticleSorter from "./ArticleSorter";
+import { useSearchParams } from "react-router-dom";
 
 export default function AllArticles({ setArticleToRead }) {
   const [articlesList, setArticlesList] = useState([]);
   const [totalCount, setTotalCount] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
-  const [sortingParams, setSortingParams] = useState({
-    sort_by: "created_at",
-    order: "desc",
-  });
+
+  const [sortingParams, setSortingParams] = useSearchParams();
 
   useEffect(() => {
     getArticles(currentPage, sortingParams).then((data) => {
       setArticlesList(data.articles);
       setTotalCount(data.total_count);
       setIsLoading(false);
-      //console.log(data.articles);
     });
   }, [currentPage, sortingParams]);
 

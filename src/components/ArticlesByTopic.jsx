@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import SearchByTopic from "./SearchByTopic";
 import { getArticles } from "../api";
 import ArticleCard from "./ArticleCard";
@@ -11,10 +11,7 @@ export default function ArticlesByTopic({ setArticleToRead }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
-  const [sortingParams, setSortingParams] = useState({
-    sort_by: "created_at",
-    order: "desc",
-  });
+  const [sortingParams, setSortingParams] = useSearchParams();
 
   const { topic } = useParams();
 
