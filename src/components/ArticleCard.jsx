@@ -63,7 +63,9 @@ export default function ArticleCard({
     <li className="ArticleCard">
       <p>Title: {title}</p>
       <img src={article_img_url} />
-      <p>Topic: {topic}</p>
+      <Link to={`/articles/topics/${topic}`}>
+        <p>Topic: {topic}</p>
+      </Link>
       <p>Author: {author}</p>
       <p>Date posted: {formatDate(created_at)}</p>
       <p>Votes: {votes}</p>
