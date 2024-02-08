@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { getArticles } from "../api";
 import ArticleCard from "./ArticleCard";
+import ArticleSorter from "./ArticleSorter";
+import { useSearchParams } from "react-router-dom";
 
 export default function AllArticles({ setArticleToRead }) {
   const [articlesList, setArticlesList] = useState([]);
@@ -8,19 +10,25 @@ export default function AllArticles({ setArticleToRead }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
 
+  const [sortingParams, setSortingParams] = useSearchParams();
+
   useEffect(() => {
-    getArticles(currentPage).then((data) => {
+    getArticles(currentPage, sortingParams).then((data) => {
       setArticlesList(data.articles);
       setTotalCount(data.total_count);
       setIsLoading(false);
     });
-  }, [currentPage]);
+  }, [currentPage, sortingParams]);
 
   if (isLoading) return <p>Loading data...</p>;
 
   return (
     <main className="AllArticles">
       <h2>List of all articles</h2>
+      <ArticleSorter
+        setSortingParams={setSortingParams}
+        sortingParams={sortingParams}
+      />
       <p>Total count: {totalCount}</p>
       <div className="AllArticles__btn-container">
         <button
