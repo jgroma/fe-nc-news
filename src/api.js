@@ -12,12 +12,6 @@ export function getArticles(p, sortingParams, topic = "") {
     });
 }
 
-// export function getArticles(p, topic = "") {
-//   return ncNewsApi.get(`/articles?p=${p}&topic=${topic}`).then((response) => {
-//     return response.data;
-//   });
-// }
-
 export function getArticleById(article_id) {
   return ncNewsApi.get(`/articles/${article_id}`).then((response) => {
     return response.data;

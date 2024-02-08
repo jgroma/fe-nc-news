@@ -10,27 +10,33 @@ export default function ArticlesByTopic({ setArticleToRead }) {
   const [totalCount, setTotalCount] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
+  const [isError, setIsError] = useState(null);
   const [sortingParams, setSortingParams] = useSearchParams();
 
   const { topic } = useParams();
 
   useEffect(() => {
+    setIsError(null);
     getArticles(currentPage, sortingParams, topic)
       .then((data) => {
         setArticlesList(data.articles);
         setTotalCount(data.total_count);
         setIsLoading(false);
-        setIsError(false);
       })
       .catch((error) => {
-        setIsError(true);
+        setIsLoading(false);
+
+        let errorMessage = "";
+        if (error.response.status === 404) {
+          errorMessage = "Topic does not exist";
+        }
+        setIsError(errorMessage);
       });
   }, [currentPage, topic, sortingParams]);
 
   if (isLoading) return <p>Loading data...</p>;
 
-  if (isError) return <p>Something went wrong.</p>;
+  if (isError) return <p>{isError}</p>;
 
   return (
     <main className="AllArticles">

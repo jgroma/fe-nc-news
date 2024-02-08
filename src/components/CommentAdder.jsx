@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import UserContext from "../contexts/UserContext";
 import { postComment } from "../api";
 
@@ -11,13 +11,21 @@ export default function CommentAdder({
   const [commentInput, setCommentInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [postingError, setPostingError] = useState(null);
+  const [postButtonStatus, setPostButtonStatus] = useState(false);
 
   const { signedInUser } = useContext(UserContext);
+
+  useEffect(() => {
+    if (Object.keys(signedInUser).length === 0) {
+      setPostButtonStatus(true);
+    }
+  }, []);
+
   function handleSubmit(event) {
     event.preventDefault();
     setIsLoading(true);
 
-    postComment(article_id, signedInUser, commentInput)
+    postComment(article_id, signedInUser.username, commentInput)
       .then((response) => {
         setIsLoading(false);
         setPostingError(null);
@@ -25,6 +33,7 @@ export default function CommentAdder({
         setTotalCount((prevCount) => prevCount + 1);
       })
       .catch((error) => {
+        setIsLoading(false);
         setPostingError("Couldn't post comment. Try again.");
       });
   }
@@ -35,6 +44,7 @@ export default function CommentAdder({
   if (isLoading) return <p>Comment is being created</p>;
   return (
     <>
+      {postButtonStatus ? <p>Sign in to post comments</p> : null}
       {postingError !== null ? <p>{postingError}</p> : null}
       <form onSubmit={handleSubmit}>
         <div className="CommentAdder__form-container">
@@ -47,7 +57,7 @@ export default function CommentAdder({
             cols="40"
             required
           />
-          <button>Submit</button>
+          <button disabled={postButtonStatus}>Submit</button>
         </div>
       </form>
     </>

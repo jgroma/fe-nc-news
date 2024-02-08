@@ -41,7 +41,7 @@ export default function CommentCard({
       <p>Date posted: {formatDate(created_at)}</p>
       <p>Votes: {votes}</p>
       <p>{body}</p>
-      {author === signedInUser ? (
+      {author === signedInUser.username ? (
         <button
           className="CommentCard__delete-btn"
           onClick={handleDelete}
@@ -50,10 +50,12 @@ export default function CommentCard({
           Delete
         </button>
       ) : null}
-      {author === signedInUser && deleteButtonStatus && !deletingError ? (
+      {author === signedInUser.username &&
+      deleteButtonStatus &&
+      !deletingError ? (
         <p>Comment deletion in progress</p>
       ) : null}
-      {author === signedInUser && deletingError ? (
+      {author === signedInUser.username && deletingError ? (
         <p>Something went wrong. Comment could not be deleted. Try again</p>
       ) : null}
     </li>

@@ -17,17 +17,30 @@ export default function ArticleById() {
   const [userVote, setUserVote] = useState(null);
   const [votingError, setVotingError] = useState(null);
 
+  const [errorArticleId, setErrorArticleId] = useState(null);
+
   const { article_id } = useParams();
 
   const { signedInUser } = useContext(UserContext);
 
   useEffect(() => {
-    getArticleById(article_id).then((data) => {
-      setArticle(data.article);
-      setIsArticleLoading(false);
-      setTotalCount(data.article.comment_count);
-      setUpdatedVote(data.article.votes);
-    });
+    setErrorArticleId(null);
+    getArticleById(article_id)
+      .then((data) => {
+        setArticle(data.article);
+        setIsArticleLoading(false);
+        setTotalCount(data.article.comment_count);
+        setUpdatedVote(data.article.votes);
+      })
+      .catch((error) => {
+        let errorMessage = "";
+        if (error.response.status === 400) {
+          errorMessage = "Article id must be a numeric value.";
+        } else {
+          errorMessage = "Article does not exist";
+        }
+        setErrorArticleId(errorMessage);
+      });
   }, []);
 
   useEffect(() => {
@@ -58,6 +71,7 @@ export default function ArticleById() {
     //}, [userVote]);
   }, [updatedVote]);
 
+  if (errorArticleId) return <p>{errorArticleId}</p>;
   if (isArticleLoading) return <p>Loading article...</p>;
   return (
     <main>
