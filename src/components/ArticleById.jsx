@@ -1,9 +1,8 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getArticleById, getComments, patchArticleVote } from "../api";
 import ArticleCard from "./ArticleCard";
 import { useParams } from "react-router-dom";
 import CommentCard from "./CommentCard";
-import UserContext from "../contexts/UserContext";
 import CommentAdder from "./CommentAdder";
 
 export default function ArticleById() {
@@ -20,8 +19,6 @@ export default function ArticleById() {
   const [errorArticleId, setErrorArticleId] = useState(null);
 
   const { article_id } = useParams();
-
-  const { signedInUser } = useContext(UserContext);
 
   useEffect(() => {
     setErrorArticleId(null);
@@ -52,13 +49,9 @@ export default function ArticleById() {
 
   useEffect(() => {
     if (userVote !== null) {
-      //console.log(userVote, "userVote in UseEffect");
       setVotingError(null);
       patchArticleVote(article_id, userVote)
-        .then((response) => {
-          //console.log(updatedVote, "updatedVote");
-          //console.log(response.article.votes, "patch article votes");
-        })
+        .then((response) => {})
         .catch((err) => {
           setVotingError("Something went wrong, please try again.");
           if (userVote === 1) {
@@ -68,7 +61,6 @@ export default function ArticleById() {
           }
         });
     }
-    //}, [userVote]);
   }, [updatedVote]);
 
   if (errorArticleId) return <p>{errorArticleId}</p>;

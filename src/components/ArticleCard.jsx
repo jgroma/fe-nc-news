@@ -25,37 +25,35 @@ export default function ArticleCard({
     setArticleToRead(article_id);
   }
 
-  function handleUpvote() {
-    if (!hasVoted) {
-      setUpdatedVote((prevVote) => prevVote + 1);
-      setHasVoted(true);
-      setDownvoteButtonStatus(true);
-      setUserVote(1);
-      //console.log("upovoted +1");
-    } else {
-      //undo upvote
-      setUpdatedVote((prevVote) => prevVote - 1);
-      setHasVoted(false);
-      setDownvoteButtonStatus(false);
-      setUserVote(-1);
-      //console.log("cancelled upvote -1");
-    }
-  }
+  function handleVoting(event) {
+    let vote = parseInt(event.target.value);
 
-  function handleDownvote() {
-    if (!hasVoted) {
-      setUpdatedVote((prevVote) => prevVote - 1);
-      setHasVoted(true);
-      setUpvoteButtonSatus(true);
-      setUserVote(-1);
-      //console.log("downvoted -1");
-    } else {
-      //undo downvote
-      setUpdatedVote((prevVote) => prevVote + 1);
-      setHasVoted(false);
-      setUpvoteButtonSatus(false);
-      setUserVote(1);
-      //console.log("cancelled downvote +1");
+    if (vote === 1) {
+      if (!hasVoted) {
+        setUpdatedVote((prevVote) => prevVote + 1);
+        setHasVoted(true);
+        setDownvoteButtonStatus(true);
+        setUserVote(1);
+      } else {
+        //undo upvote
+        setUpdatedVote((prevVote) => prevVote - 1);
+        setHasVoted(false);
+        setDownvoteButtonStatus(false);
+        setUserVote(-1);
+      }
+    } else if (vote === -1) {
+      if (!hasVoted) {
+        setUpdatedVote((prevVote) => prevVote - 1);
+        setHasVoted(true);
+        setUpvoteButtonSatus(true);
+        setUserVote(-1);
+      } else {
+        //undo downvote
+        setUpdatedVote((prevVote) => prevVote + 1);
+        setHasVoted(false);
+        setUpvoteButtonSatus(false);
+        setUserVote(1);
+      }
     }
   }
 
@@ -78,10 +76,18 @@ export default function ArticleCard({
       {body !== undefined ? <p>{body}</p> : null}
       {setUpdatedVote !== undefined ? (
         <div className="ArticleCard__btn-container">
-          <button onClick={handleUpvote} disabled={upvoteButtonStatus}>
+          <button
+            value={1}
+            onClick={handleVoting}
+            disabled={upvoteButtonStatus}
+          >
             {downvoteButtonStatus ? "Cancel upvote" : "Upvote"}
           </button>
-          <button onClick={handleDownvote} disabled={downvoteButtonStatus}>
+          <button
+            value={-1}
+            onClick={handleVoting}
+            disabled={downvoteButtonStatus}
+          >
             {upvoteButtonStatus ? "Cancel downvote" : "Downvote"}
           </button>
         </div>
