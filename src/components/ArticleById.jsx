@@ -66,7 +66,7 @@ export default function ArticleById() {
   if (errorArticleId) return <p>{errorArticleId}</p>;
   if (isArticleLoading) return <p>Loading article...</p>;
   return (
-    <main>
+    <main className="ArticleById">
       <ArticleCard
         article_id={article.article_id}
         title={article.title}

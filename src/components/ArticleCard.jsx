@@ -59,8 +59,10 @@ export default function ArticleCard({
 
   return (
     <li className="ArticleCard">
-      <p>Title: {title}</p>
-      <img src={article_img_url} />
+      <p>
+        Title: <span className="ArticleCard__title">{title}</span>
+      </p>
+      <img src={article_img_url} alt={`${title} article image`} />
       <Link to={`/articles/topics/${topic}`}>
         <p>Topic: {topic}</p>
       </Link>

@@ -40,7 +40,7 @@ export default function SearchByTopic({}) {
   if (isError) return <p>{isError}</p>;
 
   return (
-    <main>
+    <div>
       <form>
         <label htmlFor="search-by-topic">Search by topic</label>
         <select
@@ -59,6 +59,6 @@ export default function SearchByTopic({}) {
           })}
         </select>
       </form>
-    </main>
+    </div>
   );
 }

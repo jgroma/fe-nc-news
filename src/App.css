@@ -1,7 +1,17 @@
+:root {
+  --main-bg-color: #b4b8cf;
+  --card-color: #f2f3f5;
+  --text-color: #273043;
+  --accent-color-1: #a62639;
+  --accent-color-2: #247b7b;
+  --shadow-color: #273043;
+}
+
 body {
   margin: 0;
   height: 100%;
-  background-color: rgb(180, 184, 207);
+  background-color: var(--main-bg-color);
+  color: var(--text-color);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11,13 +21,85 @@ body {
 #root {
   /* max-width: 1280px; */
   /* margin: 0 auto; */
-  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* padding: 2rem; */
   text-align: center;
   box-sizing: border-box;
+  gap: 2em;
   /* background-color: rgb(180, 184, 207); */
   margin: 0;
   height: 100%;
   /* min-height: 100vh; */
+  background-color: var(--main-bg-color);
+  width: 100%;
+}
+
+.navigation-wrapper {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--card-color);
+  width: 100%;
+  padding-bottom: 1em;
+  /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
+  border-bottom: 1px solid var(--text-color);
+  gap: 1em;
+}
+
+.navigation {
+  display: flex;
+  gap: 2em;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: var(--card-color);
+}
+
+nav {
+  display: flex;
+  align-items: center;
+}
+
+h1 {
+  font-size: 5rem;
+  /* color: rgb(230, 177, 161); */
+  color: var(--accent-color-1);
+  text-shadow: rgb(230, 177, 161) -5px 5px, var(--card-color) -10px 10px,
+    var(--accent-color-2) -15px 15px;
+  text-align: center;
+}
+
+h1 {
+  margin: 0;
+}
+
+button {
+  border-radius: 8px;
+  border: 2px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: var(--card-color);
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: var(--accent-color-2);
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+a {
+  font-weight: 500;
+  color: var(--accent-color-2);
+  text-decoration: inherit;
+}
+a:hover {
+  color: var(--accent-color-1);
 }
 
 li {
@@ -30,8 +112,8 @@ li {
   grid-row-gap: 2em;
   padding: 2em;
   list-style-type: none;
-  background-color: rgb(185, 123, 83);
-  color: black;
+  background-color: var(--main-bg-color);
+  color: var(--text-color);
 }
 
 @media (min-width: 768px) {
@@ -43,20 +125,57 @@ li {
   }
 }
 
+.Articles__filters-container {
+  display: flex;
+  gap: 2em;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 img {
   max-width: 200px;
   max-height: 200px;
 }
 .ArticleCard {
-  background-color: rgb(242, 243, 245);
+  background-color: var(--card-color);
   border-radius: 10px;
   padding: 1em;
+  border: 1em solid transparent;
+  border-left: 1em solid var(--accent-color-2);
+  /* border-right: 1em solid var(--accent-color-2); */
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.ArticleCard__title {
+  color: var(--text-color);
+  font-weight: 600;
+}
+
+.AllArticles__list > .ArticleCard {
+  max-width: 350px;
 }
 
 .AllArticles__btn-container {
   display: flex;
   justify-content: center;
   gap: 1em;
+}
+
+.ArticleById > .ArticleCard {
+  max-width: 600px;
+}
+.ArticleById {
+  /* display: grid;
+  grid-template-columns: 1fr;
+  grid-row-gap: 2em; */
+  padding: 2em;
+  list-style-type: none;
+  background-color: var(--main-bg-color);
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .CommentList {
@@ -67,7 +186,12 @@ img {
   padding: 2em;
   list-style-type: none;
   /* background-color: rgb(185, 123, 83); */
-  color: black;
+  color: var(--text-color);
+}
+
+.CommentList > .ArticleCard {
+  border: none;
+  /* border-left: 1em solid var(--text-color); */
 }
 
 @media (max-width: 768px) {
@@ -86,7 +210,7 @@ img {
 }
 
 .ArticleCard__btn-container > button {
-  border: 1px solid black;
+  border: 1px solid var(--accent-color-2);
 }
 
 .CommentAdder__form-container {
@@ -99,7 +223,7 @@ img {
 }
 
 .CommentCard__delete-btn {
-  border: 1px solid red;
+  border: 1px solid var(--accent-color-1);
 }
 
 .User {
@@ -111,5 +235,11 @@ img {
 .User > img {
   width: 3em;
   height: 3em;
-  border-radius: 20px;
+  border-radius: 50%;
+  border: 1px solid var(--shadow-color);
+}
+
+.ArticleSorter__form-container {
+  display: flex;
+  gap: 0.5em;
 }
