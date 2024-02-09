@@ -3,32 +3,45 @@ import { getArticles } from "../api";
 import ArticleCard from "./ArticleCard";
 import ArticleSorter from "./ArticleSorter";
 import { useSearchParams } from "react-router-dom";
+import SearchByTopic from "./SearchByTopic";
 
 export default function AllArticles({ setArticleToRead }) {
   const [articlesList, setArticlesList] = useState([]);
   const [totalCount, setTotalCount] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(null);
 
   const [sortingParams, setSortingParams] = useSearchParams();
 
   useEffect(() => {
-    getArticles(currentPage, sortingParams).then((data) => {
-      setArticlesList(data.articles);
-      setTotalCount(data.total_count);
-      setIsLoading(false);
-    });
+    setIsError(null);
+    getArticles(currentPage, sortingParams)
+      .then((data) => {
+        setArticlesList(data.articles);
+        setTotalCount(data.total_count);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        console.log(error);
+        let errorMessage = error.response.data.message;
+        setIsError(errorMessage);
+      });
   }, [currentPage, sortingParams]);
 
   if (isLoading) return <p>Loading data...</p>;
 
+  if (isError) return <p>{isError}</p>;
+
   return (
     <main className="AllArticles">
-      <h2>List of all articles</h2>
+      <SearchByTopic />
       <ArticleSorter
         setSortingParams={setSortingParams}
         sortingParams={sortingParams}
       />
+      <h2>List of all articles</h2>
       <p>Total count: {totalCount}</p>
       <div className="AllArticles__btn-container">
         <button

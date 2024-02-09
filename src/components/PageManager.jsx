@@ -5,11 +5,9 @@ import { useState } from "react";
 import SearchByTopic from "./SearchByTopic";
 import ArticlesByTopic from "./ArticlesByTopic";
 import ErrorPage from "./ErrorPage";
-import SignIn from "./SignIn";
 
 export default function PageManager() {
   const [articleToRead, setArticleToRead] = useState();
-  const [pathError, setPathError] = useState();
 
   return (
     <Routes>
@@ -23,7 +21,6 @@ export default function PageManager() {
         path="/articles/topics/:topic"
         element={<ArticlesByTopic setArticleToRead={setArticleToRead} />}
       />
-      {/* <Route path="/sign-in" element={<SignIn />} /> */}
       <Route path="*" element={<ErrorPage />} />
     </Routes>
   );

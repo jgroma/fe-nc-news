@@ -25,11 +25,8 @@ export default function ArticlesByTopic({ setArticleToRead }) {
       })
       .catch((error) => {
         setIsLoading(false);
-
-        let errorMessage = "";
-        if (error.response.status === 404) {
-          errorMessage = "Topic does not exist";
-        }
+        console.log(error);
+        let errorMessage = error.response.data.message;
         setIsError(errorMessage);
       });
   }, [currentPage, topic, sortingParams]);
@@ -40,7 +37,7 @@ export default function ArticlesByTopic({ setArticleToRead }) {
 
   return (
     <main className="AllArticles">
-      <SearchByTopic />
+      <SearchByTopic sortingParams={sortingParams} />
       <ArticleSorter
         sortingParams={sortingParams}
         setSortingParams={setSortingParams}
