@@ -36,11 +36,13 @@ export default function AllArticles({ setArticleToRead }) {
 
   return (
     <main className="AllArticles">
-      <SearchByTopic />
-      <ArticleSorter
-        setSortingParams={setSortingParams}
-        sortingParams={sortingParams}
-      />
+      <div className="Articles__filters-container">
+        <SearchByTopic sortingParams={sortingParams} />
+        <ArticleSorter
+          sortingParams={sortingParams}
+          setSortingParams={setSortingParams}
+        />
+      </div>
       <h2>List of all articles</h2>
       <p>Total count: {totalCount}</p>
       <div className="AllArticles__btn-container">

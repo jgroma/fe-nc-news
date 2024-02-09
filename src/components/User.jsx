@@ -7,7 +7,7 @@ export default function User() {
   return (
     <div className="User">
       <span>{signedInUser.username}</span>
-      <img src={signedInUser.avatar_url} />
+      <img src={signedInUser.avatar_url} alt="user avatar image" />
     </div>
   );
 }

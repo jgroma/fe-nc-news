@@ -17,9 +17,13 @@ function App() {
   return (
     <>
       <UserContext.Provider value={{ signedInUser, setSignedInUser }}>
-        <Header />
-        <Navbar />
-        <User />
+        <div className="navigation-wrapper">
+          <Header />
+          <div className="navigation">
+            <Navbar />
+            <User />
+          </div>
+        </div>
         <PageManager />
       </UserContext.Provider>
     </>
